@@ -1,0 +1,14 @@
+search city
+https://api.teleport.org/api/cities/?search=rome
+
+score:
+https://api.teleport.org/api/urban_areas/slug:rome/scores/ (attenzione non tutte le città anno lo score)
+
+immagini:
+https://api.teleport.org/api/urban_areas/slug:rome/images/
+
+basic info:
+https://api.teleport.org/api/cities/geonameid:3169070/ got by search city 
+
+lista città:
+https://api.teleport.org/api/urban_areas/slug:rome/cities/

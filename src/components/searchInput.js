@@ -24,9 +24,11 @@ function searchInput() {
   // TO DO: creare elemento datalist da popolare con promise.
   // aggiungere eventListener per verifica testo inserito (input listener) e popolare datalist
 
-  searchDomInput.addEventListener("input", () =>
-    console.log(searchCityApi(searchDomInput.value))
-  );
+  searchDomInput.addEventListener("input", () => {
+    if (searchDomInput.value.length >= 1) {
+      console.log(searchCityApi(searchDomInput.value));
+    }
+  });
 
   // searchDomDiv.insertAdjacentHTML(
   //   "afterbegin",

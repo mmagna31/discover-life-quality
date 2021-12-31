@@ -1,3 +1,5 @@
+import searchCityApi from "../api/searchCityApi";
+
 function searchInput() {
   // <input class="form-control" list="citiesOptions" id="citiesDataList" placeholder="Type to search...">
   // <label for="citiesDataList" class="form-label">Type city name..</label>
@@ -19,7 +21,12 @@ function searchInput() {
   searchDomLabel.className = "form-label";
   searchDomLabel.textContent = "Type city name..";
 
-  // TO DO: creare elemento datalist da popolare con promise
+  // TO DO: creare elemento datalist da popolare con promise.
+  // aggiungere eventListener per verifica testo inserito (input listener) e popolare datalist
+
+  searchDomInput.addEventListener("input", () =>
+    console.log(searchCityApi(searchDomInput.value))
+  );
 
   // searchDomDiv.insertAdjacentHTML(
   //   "afterbegin",

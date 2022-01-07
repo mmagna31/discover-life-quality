@@ -1,23 +1,9 @@
 import _ from "lodash";
 import searchCityApi from "../api/searchCityApi";
 
-/*
-        <form class="d-flex">
-            <input class="form-control me-2" type="search" list="datalistOptions" placeholder="Search"
-                aria-label="Search">
-            <datalist id="datalistOptions">
-                <option value="San Francisco">
-                <option value="New York">
-                <option value="Seattle">
-                <option value="Los Angeles">
-                <option value="Chicago">
-            </datalist>
-            <button class="btn btn-outline-success" type="submit">Search</button>
-        </form>
-*/
-
 let inputLastChangeTime = _.now();
 let timerId;
+let count = 0;
 
 function searchInput() {
   const inputTimeout = 3000;
@@ -45,9 +31,9 @@ function searchInput() {
   searchDomDatalist.id = datalistId;
 
   // FORM
-  const searchDomDiv = document.createElement("form");
-  searchDomDiv.className = "d-flex form-floating";
-  searchDomDiv.append(searchDomInput, searchDomLabel, searchDomDatalist);
+  const searchDomForm = document.createElement("form");
+  searchDomForm.className = "d-flex form-floating";
+  searchDomForm.append(searchDomInput, searchDomLabel, searchDomDatalist);
 
   // INPUT LISTENER
   searchDomInput.addEventListener("input", () => {
@@ -60,11 +46,17 @@ function searchInput() {
 
       // DATALIST OPTION
       _.forEach(citiesList, (value) => {
-        const datalistOption = document.createElement("option");
-        datalistOption.setAttribute("value", _.get(value, "fullname"));
+        // const datalistOption = document.createElement("option");
+        // datalistOption.setAttribute("value", _.get(value, "fullname"));
+        const datalistOption = new Option(_.get(value, "fullname"));
         searchDomDatalist.append(datalistOption);
       });
     }
+
+    searchDomInput.addEventListener("change", () => {
+      count += 1;
+      console.log(count, "evento onChange");
+    });
 
     // check se deve chiamare api
     let inputChangeTime = _.now();
@@ -81,7 +73,8 @@ function searchInput() {
     }
   });
 
-  return searchDomDiv;
+  // return form
+  return searchDomForm;
 }
 
 export default searchInput;

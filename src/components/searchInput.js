@@ -77,4 +77,4 @@ function searchInput() {
   return searchDomForm;
 }
 
-export default searchInput;
+// export default searchInput;

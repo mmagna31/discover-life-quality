@@ -21,12 +21,26 @@ const teleportApi = {
 
       return _.map(searchResult, (value) => {
         const fullname = _.get(value, "matching_full_name");
-        const cityItem = _.get(value, "_links.city:item.href");
-        return new City(fullname, cityItem);
+        const cityUrl = _.get(value, "_links.city:item.href");
+        return new City(fullname, cityUrl);
       });
     } catch (err) {
       console.log("Error:", err);
       throw err;
     }
   },
+
+  async getCityScore(cityName) {
+    try {
+      const response = await this.instance.get(
+        `/urban_areas/slug:${cityName}/scores/`
+      );
+      return response.data;
+    } catch (err) {
+      console.log(err);
+      throw err;
+    }
+  },
 };
+
+export default teleportApi;

@@ -1,7 +1,7 @@
 class TeleportCity {
-  constructor(fullname, cityItem) {
+  constructor(fullname, cityUrl) {
     this.fullname = fullname;
-    this.cityItem = cityItem;
+    this.cityUrl = cityUrl;
   }
 }
 

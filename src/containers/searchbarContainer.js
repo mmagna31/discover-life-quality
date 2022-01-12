@@ -74,7 +74,9 @@ function searchbar(id) {
 
   const button = searchButton(buttonId, "Search");
   button.addEventListener("click", () => {
-    console.log(teleportApi.getCityScore("rome"));
+    const inputValue = document.getElementById(inputId);
+    console.log(_.kebabCase(_.lowerCase(_.split(inputValue.value, ",", 1))));
+    // console.log(teleportApi.getCityScore("rome"));
   });
 
   const div = parseHtmlById(html, id);

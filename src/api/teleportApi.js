@@ -1,3 +1,4 @@
+import _ from "lodash";
 import City from "./teleportCity";
 
 const axios = require("axios");
@@ -37,7 +38,22 @@ const teleportApi = {
       );
       return response.data;
     } catch (err) {
-      console.log(err);
+      console.log(`getCityScore has failed for cityName: ${cityName}`);
+      if (err.response?.status == 404) {
+        console.log(`Scores not found for ${cityName} - ${err.message}`);
+      }
+      throw err;
+    }
+  },
+
+  async getCityName(geonameid) {
+    try {
+      const response = await this.instance.get(
+        `/cities/geonameid:${geonameid}/`
+      );
+
+      return response.data.name;
+    } catch (err) {
       throw err;
     }
   },

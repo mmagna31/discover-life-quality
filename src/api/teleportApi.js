@@ -18,13 +18,15 @@ const teleportApi = {
         "_embedded.city:search-results"
       );
 
-      if (_.isEmpty(searchResult)) return searchResult;
+      // if (_.isEmpty(searchResult)) return searchResult;
 
-      return _.map(searchResult, (value) => {
-        const fullname = _.get(value, "matching_full_name");
-        const cityUrl = _.get(value, "_links.city:item.href");
-        return new City(fullname, cityUrl);
-      });
+      // return _.map(searchResult, (value) => {
+      //   const fullname = _.get(value, "matching_full_name");
+      //   const cityUrl = _.get(value, "_links.city:item.href");
+      //   return new City(fullname, cityUrl);
+      // });
+
+      return searchResult;
     } catch (err) {
       console.log("Error:", err);
       throw err;

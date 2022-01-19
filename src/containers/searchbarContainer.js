@@ -1,7 +1,9 @@
+import _ from "lodash";
 import teleportApi from "../api/teleportApi.js";
 import searchButton from "../components/searchbar/searchButton.js";
 import searchInput from "../components/searchbar/searchInput.js";
 import parseHtmlById from "../utils/parseHtml.js";
+import scoresContainer from "./scoresContainer.js";
 
 async function setDatalist(inputId, datalistId) {
   try {
@@ -11,15 +13,15 @@ async function setDatalist(inputId, datalistId) {
 
     console.log("in setDatalist function: eseguo chiamata searchCity");
 
-    const citiesList = await teleportApi.searchCity(
-      _.replace(input.value, /\(.*\)/, "")
-    );
+    const citiesList = await teleportApi.searchCity(input.value);
 
     // create datalist option
     _.forEach(citiesList, (value) => {
-      // fai pulizia dell'output della chiamata: elimina (roma)
-      const fullname = _.get(value, "fullname");
+      const fullname = _.get(value, "matching_full_name");
+      const cityUrl = _.get(value, "_links.city:item.href");
+      const cityId = _.replace(cityUrl, /.*:(\d*).*/, "$1");
       const datalistOption = new Option(fullname);
+      datalistOption.dataset.cityId = cityId;
       datalist.append(datalistOption);
     });
   } catch (err) {
@@ -61,6 +63,7 @@ function searchbar(id) {
     const btn = document.getElementById(buttonId);
 
     // trovare altro metodo migliore per ricerca valore in option
+
     if (
       _.find(datalist.children, function (opt) {
         return opt.value == event.target.value;
@@ -73,10 +76,24 @@ function searchbar(id) {
   });
 
   const button = searchButton(buttonId, "Search");
-  button.addEventListener("click", () => {
-    const inputValue = document.getElementById(inputId);
-    console.log(_.kebabCase(_.lowerCase(_.split(inputValue.value, ",", 1))));
-    // console.log(teleportApi.getCityScore("rome"));
+  button.addEventListener("click", async () => {
+    const inputValue = document.getElementById(inputId).value;
+
+    //cercare id of input value in datalist
+    const datalist = document.getElementById(datalistId);
+
+    // ritorna il primo elemento che contiene input.value
+    const opt = _.find(datalist.children, (optElement) => {
+      return optElement.text == inputValue;
+    });
+
+    const cityId = opt.dataset.cityId;
+    let cityName = await teleportApi.getCityName(cityId);
+    cityName = _.kebabCase(cityName);
+
+    const scores = await teleportApi.getCityScore(cityName);
+    console.log("SCORES:", scores);
+    document.body.append(scoresContainer(scores));
   });
 
   const div = parseHtmlById(html, id);

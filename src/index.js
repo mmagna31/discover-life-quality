@@ -5,14 +5,21 @@ var _ = require("lodash");
 document.body.append(searchbar("searchContainer"));
 
 //TESTING
-import teleportApi from "./api/teleportApi";
+// import teleportApi from "./api/teleportApi";
 
-const tmp = async () =>
-  console.log("SCORES: ", await teleportApi.getCityScore("rom"));
+// const tmp = async () =>
+//   console.log("SCORES: ", await teleportApi.getCityScore("rom"));
 
-tmp();
+// tmp();
 
-const tmp2 = async () =>
-  console.log("cityname: ", await teleportApi.getCityName(3169070));
+// const tmp2 = async () =>
+//   console.log("cityname: ", await teleportApi.getCityName(3169070));
 
-tmp2();
+// tmp2();
+
+// const tmp3 = async () => {
+//   const cityList = await teleportApi.searchCity("roma");
+//   console.log("searchCity: ", cityList);
+// };
+
+// tmp3();

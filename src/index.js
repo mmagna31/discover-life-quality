@@ -9,6 +9,7 @@ import renderScoresList from "./components/scoresList/scoresList";
 const searchbarID = "searchbar";
 const cityInputID = "cityInp";
 const searchCityBtnID = "searchCityBtn";
+
 const citiesList = [
   { geonameid: "12345", name: "roma" },
   { geonameid: "67890", name: "losangeles" },
@@ -19,7 +20,7 @@ const components = {
   cityList: renderCityList("cityList", citiesList),
 };
 
-// -----------     da rivedere
+// -----------     da rivedere perchè main deve essere una funzione async
 async function setScore() {
   const scores = await teleportApi.getCityScore("rome");
   components.scores = renderScoresList(scores);
@@ -27,27 +28,46 @@ async function setScore() {
   const main = document.getElementsByTagName("main")[0];
   main.insertAdjacentHTML("beforeend", components.scores);
 }
-setScore();
+// setScore();
 // -----------------------------
 
 function renderMain() {
   // render components on page index.html
-  console.log("in main:-----------------", components.scores);
-
   const main = document.getElementsByTagName("main")[0];
   main.insertAdjacentHTML("beforeend", components.searchbar);
-  main.insertAdjacentHTML("beforeend", components.cityList);
+  // main.insertAdjacentHTML("beforeend", components.cityList);
 }
 
 renderMain();
 
 function addLogic() {
-  /* aggiungi listener per gestire logica */
+  /* aggiungi listener per gestire logica 
+  clicco su pulsante -> prendo valore input -> cerco città -> renderizzo citiesList
+  */
   const searchBtnElement = document.getElementById(searchCityBtnID);
-  searchBtnElement.addEventListener("click", () => {
-    const city = document.getElementById(cityInputID).value;
+  searchBtnElement.addEventListener("click", async function getCities() {
+    // inserire logic scrittura maggiore di 2 o 0 e inserire un modale
+    const cityToSearch = document.getElementById(cityInputID).value;
+    let citiesList = await teleportApi.searchCity(cityToSearch);
 
-    alert(city);
+    // ----------------------------renderizzo elenco città
+    // trasform citiesList in array
+    citiesList = _.map(citiesList, (value) => {
+      let geonameid = _.get(value, "_links.city:item.href");
+      // return only geonameid number from href teleport
+      geonameid = _.replace(geonameid, /.*:(\d*).*/, "$1");
+      const name = _.get(value, "matching_full_name");
+      return {
+        geonameid: geonameid,
+        name: name,
+      };
+    });
+
+    const main = document.getElementsByTagName("main")[0];
+    main.insertAdjacentHTML(
+      "beforeend",
+      renderCityList("cityList", citiesList)
+    );
   });
 }
 

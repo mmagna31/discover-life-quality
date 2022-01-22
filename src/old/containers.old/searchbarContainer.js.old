@@ -1,7 +1,7 @@
 import _ from "lodash";
 import teleportApi from "../api/teleportApi.js";
-import searchButton from "../components/searchbar/searchButton.js";
-import searchInput from "../components/searchbar/searchInput.js";
+import searchButton from "../components/searchbar.old/searchButton.js.js";
+import searchInput from "../components/searchbar.old/searchInput.js";
 import parseHtmlById from "../utils/parseHtml.js";
 import scoresContainer from "./scoresContainer.js";
 

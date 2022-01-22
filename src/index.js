@@ -1,25 +1,54 @@
-import searchbar from "./containers/searchbarContainer.js";
 import "./scss/custom.scss";
 var _ = require("lodash");
 
-document.body.append(searchbar("searchContainer"));
+import teleportApi from "./api/teleportApi";
+import renderSeachbar from "./components/searchbar/searchbar";
+import renderCityList from "./components/citiesList/citiesList";
+import renderScoresList from "./components/scoresList/scoresList";
 
-//TESTING
-// import teleportApi from "./api/teleportApi";
+const searchbarID = "searchbar";
+const cityInputID = "cityInp";
+const searchCityBtnID = "searchCityBtn";
+const citiesList = [
+  { geonameid: "12345", name: "roma" },
+  { geonameid: "67890", name: "losangeles" },
+];
 
-// const tmp = async () =>
-//   console.log("SCORES: ", await teleportApi.getCityScore("rom"));
+const components = {
+  searchbar: renderSeachbar(searchbarID, cityInputID, searchCityBtnID),
+  cityList: renderCityList("cityList", citiesList),
+};
 
-// tmp();
+// -----------     da rivedere
+async function setScore() {
+  const scores = await teleportApi.getCityScore("rome");
+  components.scores = renderScoresList(scores);
+  console.log("in setScore -------------:", typeof components.scores);
+  const main = document.getElementsByTagName("main")[0];
+  main.insertAdjacentHTML("beforeend", components.scores);
+}
+setScore();
+// -----------------------------
 
-// const tmp2 = async () =>
-//   console.log("cityname: ", await teleportApi.getCityName(3169070));
+function renderMain() {
+  // render components on page index.html
+  console.log("in main:-----------------", components.scores);
 
-// tmp2();
+  const main = document.getElementsByTagName("main")[0];
+  main.insertAdjacentHTML("beforeend", components.searchbar);
+  main.insertAdjacentHTML("beforeend", components.cityList);
+}
 
-// const tmp3 = async () => {
-//   const cityList = await teleportApi.searchCity("roma");
-//   console.log("searchCity: ", cityList);
-// };
+renderMain();
 
-// tmp3();
+function addLogic() {
+  /* aggiungi listener per gestire logica */
+  const searchBtnElement = document.getElementById(searchCityBtnID);
+  searchBtnElement.addEventListener("click", () => {
+    const city = document.getElementById(cityInputID).value;
+
+    alert(city);
+  });
+}
+
+addLogic();

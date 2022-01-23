@@ -5,8 +5,8 @@ import Mustache from "mustache";
 function renderCityList(citiesListID, citiesListObj) {
   /* citiesListObj must be an array of cities
       cities: [
-      { geoid: "12345", name: "roma" },
-      { geoid: "67890", name: "losangeles" },
+      { geonameid: "12345", name: "roma" },
+      { geonameid: "67890", name: "losangeles" },
     ],
    */
 

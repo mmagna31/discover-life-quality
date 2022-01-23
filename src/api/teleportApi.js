@@ -39,14 +39,34 @@ const teleportApi = {
     }
   },
 
-  async getCityName(geonameid) {
+  // async getCityName(geonameid) {
+  //   try {
+  //     const response = await this.instance.get(
+  //       `/cities/geonameid:${geonameid}/`
+  //     );
+
+  //     return response.data.name;
+  //   } catch (err) {
+  //     throw err;
+  //   }
+  // },
+
+  async getUrbanAreaSlugName(geonameid) {
     try {
       const response = await this.instance.get(
         `/cities/geonameid:${geonameid}/`
       );
+      let result = _.get(response.data, "_links.city:urban_area.href");
+      result = _.replace(result, /.*:(.*)\//, "$1");
 
-      return response.data.name;
+      if (!result)
+        throw Error(
+          `City Urban Area is not present for geonameid ${geonameid}`
+        );
+
+      return result;
     } catch (err) {
+      console.log(err.message);
       throw err;
     }
   },

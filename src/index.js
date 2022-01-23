@@ -9,44 +9,26 @@ import renderScoresList from "./components/scoresList/scoresList";
 const searchbarID = "searchbar";
 const cityInputID = "cityInp";
 const searchCityBtnID = "searchCityBtn";
+const citiesListID = "citiesList";
+const cityScoresID = "scores"; // da cambiare nel template
 
-const citiesList = [
-  { geonameid: "12345", name: "roma" },
-  { geonameid: "67890", name: "losangeles" },
-];
-
-const components = {
-  searchbar: renderSeachbar(searchbarID, cityInputID, searchCityBtnID),
-  cityList: renderCityList("cityList", citiesList),
-};
-
-// -----------     da rivedere perchè main deve essere una funzione async
-async function setScore() {
-  const scores = await teleportApi.getCityScore("rome");
-  components.scores = renderScoresList(scores);
-  console.log("in setScore -------------:", typeof components.scores);
-  const main = document.getElementsByTagName("main")[0];
-  main.insertAdjacentHTML("beforeend", components.scores);
-}
-// setScore();
-// -----------------------------
+// const components = {
+//   searchbar: ,
+//   // cityList: renderCityList("cityList", citiesList),
+// };
 
 function renderMain() {
   // render components on page index.html
   const main = document.getElementsByTagName("main")[0];
-  main.insertAdjacentHTML("beforeend", components.searchbar);
-  // main.insertAdjacentHTML("beforeend", components.cityList);
-}
+  main.insertAdjacentHTML(
+    "beforeend",
+    renderSeachbar(searchbarID, cityInputID, searchCityBtnID)
+  );
 
-renderMain();
-
-function addLogic() {
-  /* aggiungi listener per gestire logica 
-  clicco su pulsante -> prendo valore input -> cerco città -> renderizzo citiesList
-  */
   const searchBtnElement = document.getElementById(searchCityBtnID);
   searchBtnElement.addEventListener("click", async function getCities() {
     // inserire logic scrittura maggiore di 2 o 0 e inserire un modale
+    // tasto enter non funziona in search
     const cityToSearch = document.getElementById(cityInputID).value;
     let citiesList = await teleportApi.searchCity(cityToSearch);
 
@@ -63,12 +45,52 @@ function addLogic() {
       };
     });
 
-    const main = document.getElementsByTagName("main")[0];
+    // rimuovere button list e scores list prima di un'altra ricerca
+    let citiesListDiv = document.getElementById(citiesListID);
+    let cityScoreDiv = document.getElementById(cityScoresID);
+
+    if (citiesListDiv) {
+      citiesListDiv.remove();
+    }
+
+    if (cityScoreDiv) {
+      cityScoreDiv.remove();
+    }
+
     main.insertAdjacentHTML(
       "beforeend",
-      renderCityList("cityList", citiesList)
+      renderCityList(citiesListID, citiesList)
     );
+
+    // assegna evento onclick a citiesList
+    // recall citiesList to update citiesList
+    citiesListDiv = document.getElementById(citiesListID);
+    citiesListDiv.addEventListener("click", async (event) => {
+      try {
+        if (event.target.tagName != "BUTTON") return false;
+
+        const slugName = await teleportApi.getUrbanAreaSlugName(
+          event.target.id
+        );
+        console.log("slugname:", typeof slugName);
+
+        const cityScores = await teleportApi.getCityScore(slugName);
+
+        citiesListDiv.remove();
+        main.insertAdjacentHTML("beforeend", renderScoresList(cityScores));
+        // TO DO: inserire messaggio per scores non disponibili...in caso far vedere altre informazioni
+        // inserire funzionne di puiza della pagina per gli elementi scores button e error message
+      } catch (err) {
+        console.log(err.message);
+        citiesListDiv.remove();
+        // oppure modale
+        main.insertAdjacentHTML(
+          "beforeend",
+          "<h1>Siamo spiacenti! non abbiamo informazioni a sufficienza per questa città</h1>"
+        );
+      }
+    });
   });
 }
 
-addLogic();
+renderMain();

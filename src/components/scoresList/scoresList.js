@@ -2,9 +2,14 @@ import _ from "lodash";
 import html from "./template.html";
 import Mustache from "mustache";
 
-function renderScoresList(scores) {
-  console.log("in renderedScoreList:", scores);
-  const rendered = Mustache.render(html, scores);
+function renderScoresList(cityScoresID, scoresList) {
+  scoresList = {
+    cityScoresID: cityScoresID,
+    scoresList: scoresList,
+  };
+  console.log("in renderedScoreList:", scoresList);
+
+  const rendered = Mustache.render(html, scoresList);
 
   return rendered;
 }

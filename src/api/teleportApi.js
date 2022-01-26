@@ -24,7 +24,7 @@ const teleportApi = {
     }
   },
 
-  async getCityScore(cityName) {
+  async getCityScores(cityName) {
     try {
       const response = await this.instance.get(
         `/urban_areas/slug:${cityName}/scores/`
@@ -38,18 +38,6 @@ const teleportApi = {
       throw err;
     }
   },
-
-  // async getCityName(geonameid) {
-  //   try {
-  //     const response = await this.instance.get(
-  //       `/cities/geonameid:${geonameid}/`
-  //     );
-
-  //     return response.data.name;
-  //   } catch (err) {
-  //     throw err;
-  //   }
-  // },
 
   async getUrbanAreaSlugName(geonameid) {
     try {

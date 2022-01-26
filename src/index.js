@@ -72,12 +72,15 @@ function renderMain() {
         const slugName = await teleportApi.getUrbanAreaSlugName(
           event.target.id
         );
-        console.log("slugname:", typeof slugName);
 
-        const cityScores = await teleportApi.getCityScore(slugName);
+        const cityScores = await teleportApi.getCityScores(slugName);
+        console.log("call getCityScores:", JSON.stringify(cityScores));
 
         citiesListDiv.remove();
-        main.insertAdjacentHTML("beforeend", renderScoresList(cityScores));
+        main.insertAdjacentHTML(
+          "beforeend",
+          renderScoresList(cityScoresID, cityScores)
+        );
         // TO DO: inserire messaggio per scores non disponibili...in caso far vedere altre informazioni
         // inserire funzionne di puiza della pagina per gli elementi scores button e error message
       } catch (err) {

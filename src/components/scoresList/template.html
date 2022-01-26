@@ -1,19 +1,19 @@
-<div id="scores" class="container-fluid">
+<div id="{{ cityScoresID }}" class="container-fluid">
     <div class="row" style="background-color: yellow;">
         <div class="col">
             <h6>Summary:</h6>
-            {{ &summary }}
+            {{ &scoresList.summary }}
         </div>
     </div>
     <div class="row">
         <div class="col-md-6">
             <h2>Categories scores out of 10</h2>
             <ul class="list-group">
-                {{#categories}}
+                {{#scoresList.categories}}
                 <li class="list-group-item list-group-item-primary mb-2" style="background-color: {{ color }}">
                     {{ name }} : {{ score_out_of_10 }}
                 </li>
-                {{/categories}}
+                {{/scoresList.categories}}
             </ul>
         </div>
     </div>
@@ -21,7 +21,7 @@
         <div class="col">
             <div class="bg-primary rounded text-center">
                 <h6>teleport city score</h6>
-                {{ teleport_city_score }}
+                {{ scoresList.teleport_city_score }}
             </div>
         </div>
     </div>

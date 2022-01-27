@@ -20,6 +20,8 @@ function startPage(elem) {
 
   const searchBtnElement = document.getElementById(searchCityBtnID);
   searchBtnElement.addEventListener("click", () => {
+    // inserire div di errore
+    cleaner(citiesListID, cityScoresID);
     // get input.value
     const cityToSearch = document.getElementById(cityInputID).value;
     setCitiesBtn(cityToSearch, elem);
@@ -54,7 +56,7 @@ async function setCitiesBtn(cityToSearch, elem) {
   const citiesListDiv = document.getElementById(citiesListID);
   citiesListDiv.addEventListener("click", (event) => {
     if (event.target.tagName != "BUTTON") return false;
-
+    cleaner(citiesListID);
     setScores(event.target.id, elem);
   });
 }
@@ -76,6 +78,14 @@ async function setScores(cityid, elem) {
       "<h1>Siamo spiacenti! non abbiamo informazioni a sufficienza per questa città</h1>"
     );
   }
+}
+
+function cleaner(...elementID) {
+  /* utiizzato per ripulire l'ambiente */
+  _.forEach(elementID, (id) => {
+    console.log(document.getElementById(id));
+    document.getElementById(id)?.remove();
+  });
 }
 
 function renderMain() {

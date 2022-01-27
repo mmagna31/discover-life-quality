@@ -1,4 +1,4 @@
 1) render error message in caso non ci fossero gli scores per una città. Ritornare messaggio più con elenco città a caso
-3) sistemare index.js - logica e creare una funzione di pulizia dell'ambiente quando si torna all'inizio
 4) tasto invio non funziona su onclick
-5) sistemare funzione cleaner
+6) fare readme github
+7) inserire header e footer template

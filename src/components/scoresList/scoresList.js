@@ -3,13 +3,10 @@ import html from "./template.html";
 import Mustache from "mustache";
 
 function renderScoresList(cityScoresID, scoresList) {
-  scoresList = {
+  const rendered = Mustache.render(html, {
     cityScoresID: cityScoresID,
     scoresList: scoresList,
-  };
-  console.log("in renderedScoreList:", scoresList);
-
-  const rendered = Mustache.render(html, scoresList);
+  });
 
   return rendered;
 }

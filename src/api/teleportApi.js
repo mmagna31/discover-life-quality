@@ -1,4 +1,5 @@
 import _ from "lodash";
+import NoInfoAvailableError from "../noInfoError";
 
 const axios = require("axios");
 
@@ -17,9 +18,13 @@ const teleportApi = {
         "_embedded.city:search-results"
       );
 
+      if (_.isEmpty(searchResult)) {
+        throw new NoInfoAvailableError(`There are no cities for ${cityName}`);
+      }
+
       return searchResult;
     } catch (err) {
-      console.log("Error:", err);
+      console.log(`searchCity failed for error: ${err.message}`);
       throw err;
     }
   },
@@ -31,15 +36,16 @@ const teleportApi = {
       );
       return response.data;
     } catch (err) {
-      console.log(`getCityScore has failed for cityName: ${cityName}`);
       if (err.response?.status == 404) {
-        console.log(`Scores not found for ${cityName} - ${err.message}`);
+        console.log(`Scores not found for ${cityName}`);
+        throw new NoInfoAvailableError(`No Scores available for ${cityName}`);
       }
+      console.log(`getCityScore has failed for cityName: ${cityName}`);
       throw err;
     }
   },
 
-  async getUrbanAreaSlugName(geonameid) {
+  async getUrbanAreaSlug(geonameid) {
     try {
       const response = await this.instance.get(
         `/cities/geonameid:${geonameid}/`
@@ -47,14 +53,15 @@ const teleportApi = {
       let result = _.get(response.data, "_links.city:urban_area.href");
       result = _.replace(result, /.*:(.*)\//, "$1");
 
-      if (!result)
-        throw Error(
-          `City Urban Area is not present for geonameid ${geonameid}`
+      if (!result) {
+        throw new NoInfoAvailableError(
+          `No slug available for city with geonameid: ${geonameid}`
         );
+      }
 
       return result;
     } catch (err) {
-      console.log(err.message);
+      console.log(`getUrbanAreaSlug failed for ${err.message}`);
       throw err;
     }
   },

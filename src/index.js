@@ -6,6 +6,7 @@ import renderSeachbar from "./components/searchbar/searchbar";
 import renderCityList from "./components/citiesList/citiesList";
 import renderScoresList from "./components/scoresList/scoresList";
 import renderErr from "./components/error/errorMessage";
+import NoInfoAvailableError from "./noInfoError";
 
 const searchbarID = "searchbar";
 const cityInputID = "cityInp";
@@ -17,7 +18,7 @@ const errorMsgID = "error";
 function startPage(elem) {
   elem.insertAdjacentHTML(
     "beforeend",
-    renderSeachbar(searchbarID, cityInputID, searchCityBtnID, errorMsgID)
+    renderSeachbar(searchbarID, cityInputID, searchCityBtnID)
   );
 
   const searchBtnElement = document.getElementById(searchCityBtnID);
@@ -30,10 +31,8 @@ function startPage(elem) {
   });
 }
 
-async function getCitiesList(cityToSearch) {
-  let citiesList = await teleportApi.searchCity(cityToSearch);
-
-  citiesList = _.map(citiesList, (value) => {
+function wrapCitiesList(citiesList) {
+  return _.map(citiesList, (value) => {
     let geonameid = _.get(value, "_links.city:item.href");
     // return only geonameid number from href teleport
     geonameid = _.replace(geonameid, /.*:(\d*).*/, "$1");
@@ -43,17 +42,15 @@ async function getCitiesList(cityToSearch) {
       name: name,
     };
   });
-
-  return citiesList;
 }
 
 async function setCitiesBtn(cityToSearch, elem) {
   try {
-    const citiesList = await getCitiesList(cityToSearch);
+    const citiesList = await teleportApi.searchCity(cityToSearch);
 
     elem.insertAdjacentHTML(
       "beforeend",
-      renderCityList(citiesListID, citiesList)
+      renderCityList(citiesListID, wrapCitiesList(citiesList))
     );
 
     const citiesListDiv = document.getElementById(citiesListID);
@@ -63,18 +60,19 @@ async function setCitiesBtn(cityToSearch, elem) {
       setScores(event.target.id, elem);
     });
   } catch (err) {
-    console.log(err.message);
-    elem.insertAdjacentHTML(
-      "beforeend",
-      renderErr(errorMsgID, "Errore errore errore")
-    );
+    let errorMsg;
+    if (err instanceof NoInfoAvailableError) {
+      errorMsg = err.message;
+    } else {
+      errorMsg = `Sorry, we can't search the city due to <b>${err.message}</b>`;
+    }
+    elem.insertAdjacentHTML("beforeend", renderErr(errorMsgID, errorMsg));
   }
 }
 
 async function setScores(cityid, elem) {
   try {
-    const slugName = await teleportApi.getUrbanAreaSlugName(cityid);
-
+    const slugName = await teleportApi.getUrbanAreaSlug(cityid);
     const cityScores = await teleportApi.getCityScores(slugName);
 
     elem.insertAdjacentHTML(
@@ -82,11 +80,13 @@ async function setScores(cityid, elem) {
       renderScoresList(cityScoresID, cityScores)
     );
   } catch (err) {
-    console.log(err.message);
-    elem.insertAdjacentHTML(
-      "beforeend",
-      renderErr(errorMsgID, "Errore errore errore")
-    );
+    let errorMsg;
+    if (err instanceof NoInfoAvailableError) {
+      errorMsg = `Sorry, we don't have enough info for this city`;
+    } else {
+      errorMsg = `Sorry, we can't search the city due to <b>${err.message}</b>`;
+    }
+    elem.insertAdjacentHTML("beforeend", renderErr(errorMsgID, errorMsg));
   }
 }
 

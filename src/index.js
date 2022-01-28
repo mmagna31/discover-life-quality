@@ -93,7 +93,6 @@ async function setScores(cityid, elem) {
 function cleaner(...elementID) {
   /* utiizzato per ripulire l'ambiente */
   _.forEach(elementID, (id) => {
-    console.log(document.getElementById(id));
     document.getElementById(id)?.remove();
   });
 }
@@ -104,3 +103,8 @@ function renderMain() {
 }
 
 renderMain();
+
+document.body.querySelector("header a").addEventListener("click", () => {
+  document.getElementById(cityInputID).value = "";
+  cleaner(citiesListID, cityScoresID, errorMsgID);
+});

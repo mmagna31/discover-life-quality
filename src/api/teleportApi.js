@@ -37,7 +37,6 @@ const teleportApi = {
       return response.data;
     } catch (err) {
       if (err.response?.status == 404) {
-        console.log(`Scores not found for ${cityName}`);
         throw new NoInfoAvailableError(`No Scores available for ${cityName}`);
       }
       console.log(`getCityScore has failed for cityName: ${cityName}`);

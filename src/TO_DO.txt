@@ -1,4 +1,3 @@
-1) render error message in caso non ci fossero gli scores per una città. Ritornare messaggio più con elenco città a caso
 4) tasto invio non funziona su onclick
 6) fare readme github
-7) inserire header e footer template
+7) vedere classi template -attenzione searchbar

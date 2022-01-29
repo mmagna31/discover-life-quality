@@ -1,3 +1,5 @@
 4) tasto invio non funziona su onclick
 6) fare readme github
 7) vedere classi template -attenzione searchbar
+8) vedere ordine ricerca città
+9) sistemare altezza bottoni citiesList

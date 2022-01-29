@@ -1,5 +1,10 @@
 <div id="{{ citiesListID }}" class="container-fluid text-center">
-    {{#cities}}
-    <button id="{{ geonameid }}" type="button" class="btn btn-outline-primary m-2">{{ name }}</button>
-    {{/cities}}
+    <div class="row">
+        {{#cities}}
+        <div class="col-md-4">
+            <button id="{{ geonameid }}" type="button" class="btn btn-primary m-2 text-white w-100">{{ name
+                }}</button>
+        </div>
+        {{/cities}}
+    </div>
 </div>

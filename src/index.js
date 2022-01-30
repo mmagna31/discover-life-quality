@@ -7,6 +7,7 @@ import renderCityList from "./components/citiesList/citiesList";
 import renderScoresList from "./components/scoresList/scoresList";
 import renderErr from "./components/error/errorMessage";
 import NoInfoAvailableError from "./noInfoError";
+import { truncate } from "lodash";
 
 const searchbarID = "searchbar";
 const cityInputID = "cityInp";
@@ -57,7 +58,8 @@ async function setCitiesBtn(cityToSearch, elem) {
     citiesListDiv.addEventListener("click", (event) => {
       if (event.target.tagName != "BUTTON") return false;
       cleaner(citiesListID);
-      setScores(event.target.id, elem);
+      const cityId = event.target.id;
+      setScores(cityId, elem);
     });
   } catch (err) {
     let errorMsg;
@@ -70,10 +72,26 @@ async function setCitiesBtn(cityToSearch, elem) {
   }
 }
 
+function roundScores(scoresCollection) {
+  /* Round scores returned by teleportApi.getCityScores method */
+  scoresCollection.teleport_city_score = _.round(
+    scoresCollection.teleport_city_score,
+    2
+  );
+
+  _.forEach(scoresCollection.categories, function (value) {
+    value.score_out_of_10 = _.round(value.score_out_of_10, 2);
+  });
+
+  return scoresCollection;
+}
+
 async function setScores(cityid, elem) {
   try {
     const slugName = await teleportApi.getUrbanAreaSlug(cityid);
-    const cityScores = await teleportApi.getCityScores(slugName);
+    let cityScores = await teleportApi.getCityScores(slugName);
+
+    cityScores = roundScores(cityScores);
 
     elem.insertAdjacentHTML(
       "beforeend",
@@ -84,7 +102,7 @@ async function setScores(cityid, elem) {
     if (err instanceof NoInfoAvailableError) {
       errorMsg = `Sorry, we don't have enough info for this city`;
     } else {
-      errorMsg = `Sorry, we can't search the city due to <b>${err.message}</b>`;
+      errorMsg = `Sorry, we can't search the city due to internal error: <b>${err.message}</b>`;
     }
     elem.insertAdjacentHTML("beforeend", renderErr(errorMsgID, errorMsg));
   }

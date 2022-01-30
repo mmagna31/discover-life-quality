@@ -74,6 +74,7 @@ async function setCitiesBtn(cityToSearch, elem) {
 
 function roundScores(scoresCollection) {
   /* Round scores returned by teleportApi.getCityScores method */
+
   scoresCollection.teleport_city_score = _.round(
     scoresCollection.teleport_city_score,
     2

@@ -4,4 +4,4 @@
 9) sistemare altezza bottoni citiesList
 10 tasto lente in search button
 11) attenzione issue con più di un errore insieme
-12) sistemare animazione tra le finestre
+12) sistemare animazione tra le finestre fare div container

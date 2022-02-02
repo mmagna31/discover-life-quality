@@ -1,5 +1,7 @@
 import "./scss/custom.scss";
 var _ = require("lodash");
+// import "../node_modules/@fortawesome/fontawesome-free/css/all.css";
+// import "../node_modules/@fortawesome/fontawesome-free/js/all.js";
 
 import teleportApi from "./api/teleportApi";
 import renderSeachbar from "./components/searchbar/searchbar";
@@ -7,7 +9,6 @@ import renderCityList from "./components/citiesList/citiesList";
 import renderScoresList from "./components/scoresList/scoresList";
 import renderErr from "./components/error/errorMessage";
 import NoInfoAvailableError from "./noInfoError";
-import { truncate } from "lodash";
 
 const searchbarID = "searchbar";
 const cityInputID = "cityInp";
@@ -112,7 +113,17 @@ async function setScores(cityid, elem) {
 function cleaner(...elementID) {
   /* utiizzato per ripulire l'ambiente */
   _.forEach(elementID, (id) => {
-    document.getElementById(id)?.remove();
+    // document.getElementById(id)?.remove();
+    // doppia ricerca rimuove evento onclick sui pulsanti
+    const elem = document.getElementById(id);
+    console.log(elem);
+    if (elem) {
+      elem.style.animation = "fadeout 1s";
+
+      setTimeout(() => {
+        elem.remove();
+      }, 1000);
+    }
   });
 }
 

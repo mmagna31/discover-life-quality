@@ -43,11 +43,28 @@ const config = {
       },
       {
         test: /\.css$/i,
-        use: [stylesHandler, "css-loader", "postcss-loader"],
+        // use: [stylesHandler, "css-loader", "postcss-loader"
+        use: [
+          stylesHandler,
+          "css-loader",
+          {
+            // Run postcss actions
+            loader: "postcss-loader",
+            options: {
+              // `postcssOptions` is needed for postcss 8.x;
+              // if you use postcss 7.x skip the key
+              postcssOptions: {
+                // postcss plugins, can be exported to postcss.config.js
+                plugins: [["autoprefixer", {}]],
+              },
+            },
+          },
+        ],
       },
       {
         test: /\.(eot|svg|ttf|woff|woff2|png|jpg|gif)$/i,
         type: "asset",
+        use: ["file-loader"],
       },
       {
         test: /test\.js$/,

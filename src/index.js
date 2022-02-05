@@ -18,6 +18,8 @@ const errorMsgID = "error";
 function startPage(elem) {
   /* oggetto searchbar */
   const searchbar = renderSeachbarObj(searchbarID);
+  /* creao div result per gestione cambio elemento */
+  const divResult = document.createElement("div");
 
   /* trova l'elemento button e assegna listener passando il valore di input */
   /* DA RIVEDERE */
@@ -28,12 +30,13 @@ function startPage(elem) {
           return child.nodeName == "INPUT";
         });
 
-        setCitiesBtn(input.value, elem);
+        divResult.innerHTML = "";
+        setCitiesBtn(input.value, divResult);
       });
     }
   });
 
-  elem.append(searchbar);
+  elem.append(searchbar, divResult);
 }
 
 function wrapCitiesList(citiesList) {
@@ -62,6 +65,8 @@ async function setCitiesBtn(cityToSearch, elem) {
 
     citiesBtnList.addEventListener("click", (event) => {
       if (event.target.tagName != "BUTTON") return false;
+      /* rimuovo contenuto divResult */
+      elem.innerHTML = "";
       const cityId = event.target.id;
       setScores(cityId, elem);
     });
@@ -73,6 +78,8 @@ async function setCitiesBtn(cityToSearch, elem) {
     } else {
       errorMsg = `Sorry, we can't search the city due to <b>${err.message}</b>`;
     }
+    /* rimuovo contenuto divResult */
+    elem.innerHTML = "";
     elem.append(renderErrObj(errorMsgID, errorMsg));
   }
 }
@@ -99,6 +106,8 @@ async function setScores(cityid, elem) {
 
     cityScores = roundScores(cityScores);
 
+    /* rimuovo contenuto divResult */
+    elem.innerHTML = "";
     elem.append(renderScoresListObj(cityScoresID, cityScores));
   } catch (err) {
     let errorMsg;
@@ -107,6 +116,8 @@ async function setScores(cityid, elem) {
     } else {
       errorMsg = `Sorry, we can't search the city due to internal error: <b>${err.message}</b>`;
     }
+    /* rimuovo contenuto divResult */
+    elem.innerHTML = "";
     elem.append(renderErrObj(errorMsgID, errorMsg));
   }
 }

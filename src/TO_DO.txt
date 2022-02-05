@@ -2,4 +2,4 @@
 6) fare readme github
 8) vedere ordine ricerca città
 9) sistemare altezza bottoni citiesList
-10 tasto lente in search button
+- rivedere gestione messaggio errore

@@ -2,14 +2,13 @@ import Mustache, { render } from "mustache";
 import parseHtmlById from "../../utils/parseHtml";
 import template from "./template.html";
 
-function renderSeachbar(containerID, inputID, buttonID) {
+function renderSeachbarObj(searchbarId) {
+  /* return searchbar as DOM object */
   const rendered = Mustache.render(template, {
-    containerID,
-    inputID,
-    buttonID,
+    searchbarId: searchbarId,
   });
 
-  return parseHtmlById(containerID, rendered);
+  return parseHtmlById(searchbarId, rendered);
 }
 
-export default renderSeachbar;
+export default renderSeachbarObj;

@@ -1,7 +1,7 @@
 import "./scss/custom.scss";
 var _ = require("lodash");
 import "../node_modules/@fortawesome/fontawesome-free/css/all.css";
-import "@fortawesome/fontawesome-free/js/all";
+import "../node_modules/@fortawesome/fontawesome-free/js/all";
 
 import teleportApi from "./api/teleportApi";
 import renderSeachbarObj from "./components/searchbar/searchbar";

@@ -1,0 +1,31 @@
+import "./scss/custom.scss";
+var _ = require("lodash");
+import "../node_modules/@fortawesome/fontawesome-free/css/all.css";
+import "@fortawesome/fontawesome-free/js/all";
+
+import teleportApi from "./api/teleportApi";
+import renderSeachbar from "./components/searchbar/searchbar";
+import renderCityList from "./components/citiesList/citiesList";
+
+import renderScoresList from "./components/scoresList/scoresList";
+import renderErr from "./components/error/errorMessage";
+import NoInfoAvailableError from "./noInfoError";
+import renderBackground from "./components/background/background";
+
+const searchbarID = "searchbar";
+const cityInputID = "cityInp";
+const searchCityBtnID = "searchCityBtn";
+const citiesListID = "citiesList";
+const cityScoresID = "scores";
+const errorMsgID = "error";
+
+function renderPage(elem) {
+  elem.append(renderSeachbar(searchbarID, cityInputID, searchCityBtnID));
+}
+
+function renderMain() {
+  const main = document.getElementsByTagName("main")[0];
+  renderPage(main);
+}
+
+renderMain();

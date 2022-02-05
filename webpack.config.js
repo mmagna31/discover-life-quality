@@ -17,6 +17,7 @@ const config = {
   output: {
     path: path.resolve(__dirname, "dist"),
     filename: "[name].[contenthash].bundle.js",
+    assetModuleFilename: "images/[hash][ext][query]",
     clean: true,
   },
   devServer: {
@@ -55,7 +56,7 @@ const config = {
               // if you use postcss 7.x skip the key
               postcssOptions: {
                 // postcss plugins, can be exported to postcss.config.js
-                plugins: [["autoprefixer", {}]],
+                plugins: [require("autoprefixer")],
               },
             },
           },
@@ -63,8 +64,7 @@ const config = {
       },
       {
         test: /\.(eot|svg|ttf|woff|woff2|png|jpg|gif)$/i,
-        type: "asset",
-        use: ["file-loader"],
+        type: "asset/resource",
       },
       {
         test: /test\.js$/,

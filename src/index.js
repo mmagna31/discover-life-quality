@@ -1,7 +1,7 @@
 import "./scss/custom.scss";
 var _ = require("lodash");
-// import "../node_modules/@fortawesome/fontawesome-free/css/all.css";
-// import "../node_modules/@fortawesome/fontawesome-free/js/all.js";
+import "../node_modules/@fortawesome/fontawesome-free/css/all.css";
+import "@fortawesome/fontawesome-free/js/all";
 
 import teleportApi from "./api/teleportApi";
 import renderSeachbar from "./components/searchbar/searchbar";
@@ -26,8 +26,9 @@ function startPage(elem) {
   const searchBtnElement = document.getElementById(searchCityBtnID);
   searchBtnElement.addEventListener("click", () => {
     // inserire div di errore
-    cleaner(citiesListID, cityScoresID, errorMsgID);
+    // cleaner(citiesListID, cityScoresID, errorMsgID);
     // get input.value
+
     const cityToSearch = document.getElementById(cityInputID).value;
     setCitiesBtn(cityToSearch, elem);
   });
@@ -58,7 +59,7 @@ async function setCitiesBtn(cityToSearch, elem) {
     const citiesListDiv = document.getElementById(citiesListID);
     citiesListDiv.addEventListener("click", (event) => {
       if (event.target.tagName != "BUTTON") return false;
-      cleaner(citiesListID);
+      // cleaner(citiesListID);
       const cityId = event.target.id;
       setScores(cityId, elem);
     });

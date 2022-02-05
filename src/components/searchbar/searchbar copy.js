@@ -1,6 +1,6 @@
 import Mustache, { render } from "mustache";
-import parseHtmlById from "../../utils/parseHtml";
 import template from "./template.html";
+import "./style.css";
 
 function renderSeachbar(containerID, inputID, buttonID) {
   const rendered = Mustache.render(template, {
@@ -9,7 +9,13 @@ function renderSeachbar(containerID, inputID, buttonID) {
     buttonID,
   });
 
-  return parseHtmlById(containerID, rendered);
+  const parser = new DOMParser();
+  const html = parser.parseFromString(rendered, "text/html");
+
+  html.getElementById(containerID).classList.add("mtop150");
+  // html.querySelector("h1").classList.add("mtop150");
+
+  return html.body.children[0];
 }
 
 export default renderSeachbar;

@@ -1,8 +1,9 @@
 import _ from "lodash";
 import html from "./template.html";
 import Mustache from "mustache";
+import parseHtmlById from "../../utils/parseHtml";
 
-function renderCityList(citiesListID, citiesListObj) {
+function renderCityListObj(citiesListID, citiesListObj) {
   /* citiesListObj must be an array of cities
       cities: [
       { geonameid: "12345", name: "roma" },
@@ -15,7 +16,7 @@ function renderCityList(citiesListID, citiesListObj) {
     cities: citiesListObj,
   });
 
-  return rendered;
+  return parseHtmlById(rendered, citiesListID);
 }
 
-export default renderCityList;
+export default renderCityListObj;

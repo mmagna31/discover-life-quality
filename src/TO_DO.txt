@@ -5,3 +5,5 @@
 - rivedere gestione messaggio errore
 - sistemare colore popover
 - rivedere navbar template
+- inserire footer
+- rivedere immagine background

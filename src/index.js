@@ -131,23 +131,6 @@ async function setScores(cityid, elem) {
   }
 }
 
-// function cleaner(...elementID) {
-//   /* utiizzato per ripulire l'ambiente */
-//   _.forEach(elementID, (id) => {
-//     // document.getElementById(id)?.remove();
-//     // doppia ricerca rimuove evento onclick sui pulsanti
-//     const elem = document.getElementById(id);
-//     console.log(elem);
-//     if (elem) {
-//       elem.style.animation = "fadeout 1s";
-
-//       setTimeout(() => {
-//         elem.remove();
-//       }, 1000);
-//     }
-//   });
-// }
-
 function renderMain() {
   const main = document.getElementsByTagName("main")[0];
   startPage(main);
@@ -171,8 +154,9 @@ function renderHeader() {
 }
 
 function renderBackToTop() {
+  const bckTopID = "backToTop";
   /* back to top button */
-  const bckTopBtn = renderBckTopObj("backToTop");
+  const bckTopBtn = renderBckTopObj(bckTopID);
   const btn = bckTopBtn.children[0];
 
   btn.addEventListener("click", () => {
@@ -181,7 +165,7 @@ function renderBackToTop() {
   });
 
   window.addEventListener("scroll", () => {
-    const bckTop = document.getElementById("bckTopBtn");
+    const bckTop = document.getElementById("backToTopBtn");
     if (
       document.body.scrollTop > 20 ||
       document.documentElement.scrollTop > 20
@@ -191,8 +175,6 @@ function renderBackToTop() {
       bckTop.hidden = true;
     }
   });
-
-  /* adding smooth behaviour for html element */
 
   document.body.append(bckTopBtn);
 }

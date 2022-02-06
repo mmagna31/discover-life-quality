@@ -14,6 +14,7 @@ import renderErrObj from "./components/error/errorMessage";
 import NoInfoAvailableError from "./noInfoError";
 import renderIntroObj from "./components/intro/intro";
 import renderNavbarObj from "./components/navbar/navbar";
+import renderBckTopObj from "./components/backtotop/backToTopBtn";
 
 const searchbarID = "searchbar";
 const citiesListID = "citiesList";
@@ -152,9 +153,6 @@ function renderMain() {
   startPage(main);
 }
 
-renderMain();
-renderHeader();
-
 function renderHeader() {
   /* SISTEMARE */
   const header = document.getElementsByTagName("header")[0];
@@ -171,3 +169,34 @@ function renderHeader() {
     if (!event.target.closest('[data-bs-toggle="popover"]')) popover.hide();
   });
 }
+
+function renderBackToTop() {
+  /* back to top button */
+  const bckTopBtn = renderBckTopObj("backToTop");
+  const btn = bckTopBtn.children[0];
+
+  btn.addEventListener("click", () => {
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+  });
+
+  window.addEventListener("scroll", () => {
+    const bckTop = document.getElementById("bckTopBtn");
+    if (
+      document.body.scrollTop > 20 ||
+      document.documentElement.scrollTop > 20
+    ) {
+      bckTop.hidden = false;
+    } else {
+      bckTop.hidden = true;
+    }
+  });
+
+  /* adding smooth behaviour for html element */
+
+  document.body.append(bckTopBtn);
+}
+
+renderMain();
+renderHeader();
+renderBackToTop();

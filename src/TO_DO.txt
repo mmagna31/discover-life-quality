@@ -4,3 +4,4 @@
 9) sistemare altezza bottoni citiesList
 - rivedere gestione messaggio errore
 - sistemare colore popover
+- rivedere navbar template

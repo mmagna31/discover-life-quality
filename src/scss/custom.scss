@@ -27,3 +27,8 @@ $font-family-base: "Roboto", sans-serif;
 .mtop150 {
   margin-top: 150px;
 }
+
+body {
+  background: url("../background.jpg") no-repeat center center fixed;
+  background-size: cover;
+}

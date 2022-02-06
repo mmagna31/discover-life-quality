@@ -1,7 +1,10 @@
 import "./scss/custom.scss";
 var _ = require("lodash");
-import "../node_modules/@fortawesome/fontawesome-free/css/all.css";
-import "../node_modules/@fortawesome/fontawesome-free/js/all";
+import "@fortawesome/fontawesome-free/css/all.css";
+import "@fortawesome/fontawesome-free/js/all";
+import "@popperjs/core";
+import * as bootstrap from "bootstrap";
+// ("bootstrap/dist/js/bootstrap.bundle");
 
 import teleportApi from "./api/teleportApi";
 import renderSeachbarObj from "./components/searchbar/searchbar";
@@ -9,13 +12,17 @@ import renderCityListObj from "./components/citiesList/citiesList";
 import renderScoresListObj from "./components/scoresList/scoresList";
 import renderErrObj from "./components/error/errorMessage";
 import NoInfoAvailableError from "./noInfoError";
+import renderIntroObj from "./components/intro/intro";
+import renderNavbarObj from "./components/navbar/navbar";
 
 const searchbarID = "searchbar";
 const citiesListID = "citiesList";
 const cityScoresID = "scores";
 const errorMsgID = "error";
+const introID = "introText";
 
 function startPage(elem) {
+  const intro = renderIntroObj(introID);
   /* oggetto searchbar */
   const searchbar = renderSeachbarObj(searchbarID);
   /* creao div result per gestione cambio elemento */
@@ -30,13 +37,14 @@ function startPage(elem) {
           return child.nodeName == "INPUT";
         });
 
+        intro.hidden = true;
         divResult.innerHTML = "";
         setCitiesBtn(input.value, divResult);
       });
     }
   });
 
-  elem.append(searchbar, divResult);
+  elem.append(intro, searchbar, divResult);
 }
 
 function wrapCitiesList(citiesList) {
@@ -122,22 +130,22 @@ async function setScores(cityid, elem) {
   }
 }
 
-function cleaner(...elementID) {
-  /* utiizzato per ripulire l'ambiente */
-  _.forEach(elementID, (id) => {
-    // document.getElementById(id)?.remove();
-    // doppia ricerca rimuove evento onclick sui pulsanti
-    const elem = document.getElementById(id);
-    console.log(elem);
-    if (elem) {
-      elem.style.animation = "fadeout 1s";
+// function cleaner(...elementID) {
+//   /* utiizzato per ripulire l'ambiente */
+//   _.forEach(elementID, (id) => {
+//     // document.getElementById(id)?.remove();
+//     // doppia ricerca rimuove evento onclick sui pulsanti
+//     const elem = document.getElementById(id);
+//     console.log(elem);
+//     if (elem) {
+//       elem.style.animation = "fadeout 1s";
 
-      setTimeout(() => {
-        elem.remove();
-      }, 1000);
-    }
-  });
-}
+//       setTimeout(() => {
+//         elem.remove();
+//       }, 1000);
+//     }
+//   });
+// }
 
 function renderMain() {
   const main = document.getElementsByTagName("main")[0];
@@ -145,3 +153,21 @@ function renderMain() {
 }
 
 renderMain();
+renderHeader();
+
+function renderHeader() {
+  /* SISTEMARE */
+  const header = document.getElementsByTagName("header")[0];
+  const navbar = renderNavbarObj();
+
+  header.append(navbar);
+  /* aggiungo popover */
+  let popover = new bootstrap.Popover(document.getElementById("info"), {
+    container: "body",
+  });
+
+  /* aggiunge evento per nascondere il popover */
+  document.body.addEventListener("click", (event) => {
+    if (!event.target.closest('[data-bs-toggle="popover"]')) popover.hide();
+  });
+}

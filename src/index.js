@@ -182,3 +182,17 @@ function renderBackToTop() {
 renderMain();
 renderHeader();
 renderBackToTop();
+
+/* assegno evento per gestione enter sull'elemento input */
+/* DA RIVEDERE */
+const inputSearch = document.getElementById(searchbarID).children[0];
+
+inputSearch.addEventListener("keyup", function (event) {
+  // Number 13 is the "Enter" key on the keyboard
+  if (event.keyCode === 13) {
+    // Cancel the default action, if needed
+    event.preventDefault();
+    // Trigger the button element with a click
+    document.getElementById(searchbarID).children[1].click();
+  }
+});

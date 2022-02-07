@@ -1,12 +1,12 @@
 <div id="{{ citiesListID }}" class="container text-center my-2" style="animation: fadein 1s;">
-    <div class="row text-center">
-        <h6>Select city</h6>
-        {{#cities}}
-        <!-- <div class="col-md-4"> -->
-        <button id="{{ geonameid }}" type="button" class="btn btn-primary mx-auto m-2 text-white shadow">
-            {{ name }}
-        </button>
-        <!-- </div> -->
-        {{/cities}}
-    </div>
+    <!-- <div class="row text-center"> -->
+
+    <p class="fs-4 fw-bold">Select a city</p>
+    {{#cities}}
+    <button id="{{ geonameid }}" type="button"
+        class="btn btn-lg btn-secondary mx-auto m-2 text-white shadow rounded-ends oneline">
+        {{ name }}
+    </button>
+    {{/cities}}
+    <!-- </div> -->
 </div>

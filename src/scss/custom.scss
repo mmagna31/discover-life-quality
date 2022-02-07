@@ -36,3 +36,14 @@ body {
 html {
   scroll-behavior: smooth;
 }
+
+.rounded-ends {
+  border-radius: 24px;
+}
+
+@include media-breakpoint-down(md) {
+  .oneline {
+    display: flex;
+    width: 100%;
+  }
+}

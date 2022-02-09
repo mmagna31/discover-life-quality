@@ -21,6 +21,7 @@ const citiesListID = "citiesList";
 const cityScoresID = "scores";
 const errorMsgID = "error";
 const introID = "introText";
+let selectedCity;
 
 function startPage(elem) {
   const intro = renderIntroObj(introID);
@@ -76,8 +77,10 @@ async function setCitiesBtn(cityToSearch, elem) {
       if (event.target.tagName != "BUTTON") return false;
       /* rimuovo contenuto divResult */
       elem.innerHTML = "";
+
       const cityId = event.target.id;
-      setScores(cityId, elem);
+      selectedCity = event.target.textContent;
+      setScores(cityId, selectedCity, elem);
     });
     elem.append(citiesBtnList);
   } catch (err) {
@@ -108,12 +111,15 @@ function roundScores(scoresCollection) {
   return scoresCollection;
 }
 
-async function setScores(cityid, elem) {
+async function setScores(cityid, selectedCity, elem) {
   try {
     const slugName = await teleportApi.getUrbanAreaSlug(cityid);
     let cityScores = await teleportApi.getCityScores(slugName);
 
     cityScores = roundScores(cityScores);
+
+    // adding cityname
+    cityScores["cityName"] = selectedCity;
 
     /* rimuovo contenuto divResult */
     elem.innerHTML = "";

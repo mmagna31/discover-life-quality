@@ -54,7 +54,9 @@ function wrapCitiesList(citiesList) {
     let geonameid = _.get(value, "_links.city:item.href");
     // return only geonameid number from href teleport
     geonameid = _.replace(geonameid, /.*:(\d*).*/, "$1");
-    const name = _.get(value, "matching_full_name");
+    let name = _.get(value, "matching_full_name");
+    /* removing duplicated name in string */
+    name = Array.from(new Set(_.split(name, ", "))).join(", ");
     return {
       geonameid: geonameid,
       name: name,
@@ -79,8 +81,8 @@ async function setCitiesBtn(cityToSearch, elem) {
       elem.innerHTML = "";
 
       const cityId = event.target.id;
-      selectedCity = event.target.textContent;
-      setScores(cityId, selectedCity, elem);
+      selectedCity = _.toUpper(event.target.textContent);
+      setScores(cityId, _.head(selectedCity.split(",")), elem);
     });
     elem.append(citiesBtnList);
   } catch (err) {
@@ -138,13 +140,13 @@ async function setScores(cityid, selectedCity, elem) {
 }
 
 function renderMain() {
-  const main = document.getElementsByTagName("main")[0];
+  const main = _.head(document.getElementsByTagName("main"));
   startPage(main);
 }
 
 function renderHeader() {
   /* SISTEMARE */
-  const header = document.getElementsByTagName("header")[0];
+  const header = _.head(document.getElementsByTagName("header"));
   const navbar = renderNavbarObj();
 
   header.append(navbar);
@@ -163,7 +165,7 @@ function renderBackToTop() {
   const bckTopID = "backToTop";
   /* back to top button */
   const bckTopBtn = renderBckTopObj(bckTopID);
-  const btn = bckTopBtn.children[0];
+  const btn = _.head(bckTopBtn.children);
 
   btn.addEventListener("click", () => {
     document.body.scrollTop = 0;

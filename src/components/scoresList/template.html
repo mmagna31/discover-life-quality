@@ -1,15 +1,15 @@
-<div id="{{ cityScoresID }}" class="container m-2 mx-auto mb-4" style="animation: fadein 1s;">
-    <div class="row">
-        <div class="col text-center">
+<div id="{{ cityScoresID }}" class="container mx-auto mb-4" style="animation: fadein 1s;">
+    <div class="row mx-1">
+        <div class="col text-center rounded-ends opacity mb-3 p-2">
             <p class="fs-4 fw-bold">{{ scoresList.cityName }}</p>
             <div class="mx-auto" style="width: 70%;">
                 {{ &scoresList.summary }}
             </div>
         </div>
     </div>
-    <div class="row text-center">
-        <p class="fs-4 fw-bold">Categories scores</p>
-        <div class=" col mb-2">
+    <div class="row mx-1">
+        <div class="col text-center opacity rounded-ends mb-3 p-2">
+            <p class="fs-4 fw-bold">CATEGORIES SCORES</p>
             <ul class="list-group rounded-ends">
                 {{#scoresList.categories}}
                 <li
@@ -20,9 +20,9 @@
             </ul>
         </div>
     </div>
-    <div class="row text-center">
-        <div class="col d-flex flex-column">
-            <p class="fs-4 fw-bold">City score</p>
+    <div class="row mx-1 ">
+        <div class="col text-center d-flex flex-column rounded-ends opacity mb-3 p-2">
+            <p class="fs-4 fw-bold">CITY SCORE</p>
             <div class="text-center text-white bg-secondary fs-1 fw-bold shadow rounded-ends">
                 {{ scoresList.teleport_city_score }}
             </div>

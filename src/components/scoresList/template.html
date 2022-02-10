@@ -10,17 +10,21 @@
     <div class="row mx-1">
         <div class="col text-center opacity rounded-ends mb-3 p-2">
             <p class="fs-4 fw-bold">CATEGORIES SCORES</p>
-            <ul class="list-group rounded-ends">
-                {{#scoresList.categories}}
-                <li
-                    class="list-group-item d-flex justify-content-between align-items-center text-white shadow bg-secondary rounded-ends mb-2 shadow">
-                    {{ name }}<span class="badge bg-primary shadow">{{ score_out_of_10 }} / 10</span>
-                </li>
-                {{/scoresList.categories}}
-            </ul>
+            <div class="container">
+                <div class="row">
+                    {{#scoresList.categories}}
+                    <div class="col-md-6  rounded-ends">
+                        <div
+                            class="list-group-item d-flex justify-content-between align-items-center text-white shadow bg-secondary mb-2 shadow">
+                            {{ name }}<span class="badge bg-primary shadow">{{ score_out_of_10 }} / 10</span>
+                        </div>
+                    </div>
+                    {{/scoresList.categories}}
+                </div>
+            </div>
         </div>
     </div>
-    <div class="row mx-1 ">
+    <div class="row mx-1">
         <div class="col text-center d-flex flex-column rounded-ends opacity mb-3 p-2">
             <p class="fs-4 fw-bold">CITY SCORE</p>
             <div class="text-center text-white bg-secondary fs-1 fw-bold shadow rounded-ends">

@@ -188,14 +188,14 @@ function renderBackToTop() {
   document.body.append(bckTopBtn);
 }
 
-renderMain();
-renderHeader();
-renderBackToTop();
-renderFooter();
-
 function renderFooter() {
   document.body.append(renderFooterObj());
 }
+
+renderMain();
+renderHeader();
+renderFooter();
+renderBackToTop();
 
 /* assegno evento per gestione enter sull'elemento input */
 /* DA RIVEDERE */

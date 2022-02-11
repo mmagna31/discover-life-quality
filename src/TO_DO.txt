@@ -2,8 +2,5 @@
 - rivedere gestione messaggio errore
 - sistemare colore popover
 - rivedere navbar template
-- inserire footer
 - rivedere immagine background
 - sistemare city score
-- troncare scritta città in citiesList
-- sistemare margini citiesList

@@ -4,3 +4,4 @@
 - rivedere navbar template
 - rivedere immagine background
 - sistemare city score
+- rivedere codice 

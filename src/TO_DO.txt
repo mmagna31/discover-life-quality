@@ -6,4 +6,4 @@
 - rivedere immagine background
 - sistemare city score
 - troncare scritta città in citiesList
-- sistemare marigini citiesList
+- sistemare margini citiesList

@@ -1,5 +1,5 @@
-<div id="{{ cityScoresID }}" class="container mx-auto mb-4" style="animation: fadein 1s;">
-    <div class="row mx-1">
+<div id="{{ cityScoresID }}" class="container mx-auto mb-4 margin-cnt-sm" style="animation: fadein 1s;">
+    <div class="row">
         <div class="col text-center rounded-ends opacity mb-3 p-2">
             <p class="fs-4 fw-bold">{{ scoresList.cityName }}</p>
             <div class="mx-auto" style="width: 70%;">
@@ -7,14 +7,14 @@
             </div>
         </div>
     </div>
-    <div class="row mx-1">
+    <div class="row">
         <div class="col text-center opacity rounded-ends mb-3 p-2">
             <p class="fs-4 fw-bold">CATEGORIES SCORES</p>
             <div class="container">
                 <div class="row">
                     {{#scoresList.categories}}
-                    <div class="col-md-6  1rounded-ends">
-                        <div class="1list-group-item d-flex justify-content-between align-items-center text-white shadow bg-secondary mb-2 shadow rounded-ends"
+                    <div class="col-md-6">
+                        <div class="d-flex justify-content-between align-items-center text-white shadow bg-secondary mb-2 shadow rounded-ends"
                             style="padding: 0.5rem 1rem;">
                             {{ name }}<span class="badge bg-primary shadow">{{ score_out_of_10 }} / 10</span>
                         </div>
@@ -24,7 +24,7 @@
             </div>
         </div>
     </div>
-    <div class="row mx-1">
+    <div class="row">
         <div class="col text-center d-flex flex-column rounded-ends opacity mb-3 p-2">
             <p class="fs-4 fw-bold">CITY SCORE</p>
             <div class="text-center text-white bg-secondary fs-1 fw-bold shadow rounded-ends w-50 mx-auto mb-3">

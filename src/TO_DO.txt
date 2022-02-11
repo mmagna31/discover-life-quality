@@ -1,4 +1,4 @@
-6) fare readme github
+- fare readme github
 - rivedere gestione messaggio errore
 - sistemare colore popover
 - rivedere navbar template

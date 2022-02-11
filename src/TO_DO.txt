@@ -1,9 +1,9 @@
-4) tasto invio non funziona su onclick
 6) fare readme github
-8) vedere ordine ricerca città
-9) sistemare altezza bottoni citiesList
 - rivedere gestione messaggio errore
 - sistemare colore popover
 - rivedere navbar template
 - inserire footer
 - rivedere immagine background
+- sistemare city score
+- troncare scritta città in citiesList
+- sistemare marigini citiesList

@@ -1,6 +1,5 @@
-<div id="{{ citiesListID }}" class="container text-center my-2" style="animation: fadein 1s;">
-    <!-- <div class="row text-center"> -->
-
+<div id="{{ citiesListID }}" class="container text-center my-2 opacity rounded-ends mb-3 p-2 "
+    style="animation: fadein 1s;">
     <p class="fs-4 fw-bold">Select a city</p>
     {{#cities}}
     <button id="{{ geonameid }}" type="button"
@@ -8,5 +7,4 @@
         {{ name }}
     </button>
     {{/cities}}
-    <!-- </div> -->
 </div>

@@ -15,15 +15,6 @@ $font-family-base: "Raleway", sans-serif;
   }
 }
 
-@keyframes fadeout {
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
-  }
-}
-
 .mtop150 {
   margin-top: 150px;
 }
@@ -31,10 +22,14 @@ $font-family-base: "Raleway", sans-serif;
 body {
   background: url("../background.jpg") no-repeat center center fixed;
   background-size: cover;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 html {
   scroll-behavior: smooth;
+  height: 100%;
 }
 
 .rounded-ends {
@@ -44,22 +39,18 @@ html {
 
 @include media-breakpoint-down(md) {
   .oneline {
-    display: flex;
     width: 100%;
     text-align: center;
     justify-content: center;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
   }
 }
 
 .opacity {
   background: rgba(255, 255, 255, 0.3);
 }
-
-// @media (min-width: 576px)
-// <style>
-// .container-sm, .container {
-//     max-width: 540px;
-// }
 
 @include media-breakpoint-down(sm) {
   .margin-cnt-sm {

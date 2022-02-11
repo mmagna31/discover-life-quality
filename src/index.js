@@ -15,6 +15,7 @@ import NoInfoAvailableError from "./noInfoError";
 import renderIntroObj from "./components/intro/intro";
 import renderNavbarObj from "./components/navbar/navbar";
 import renderBckTopObj from "./components/backtotop/backToTopBtn";
+import renderFooterObj from "./components/footer/footer";
 
 const searchbarID = "searchbar";
 const citiesListID = "citiesList";
@@ -90,7 +91,7 @@ async function setCitiesBtn(cityToSearch, elem) {
     if (err instanceof NoInfoAvailableError) {
       errorMsg = err.message;
     } else {
-      errorMsg = `Sorry, we can't search the city due to <b>${err.message}</b>`;
+      errorMsg = `Sorry, we can't search the city due to internal error: <b>${err.message}</b>`;
     }
     /* rimuovo contenuto divResult */
     elem.innerHTML = "";
@@ -129,7 +130,7 @@ async function setScores(cityid, selectedCity, elem) {
   } catch (err) {
     let errorMsg;
     if (err instanceof NoInfoAvailableError) {
-      errorMsg = `Sorry, we don't have enough info for this city`;
+      errorMsg = `Sorry, we don't have enough info for this city. <b>Try looking for another city</b>.`;
     } else {
       errorMsg = `Sorry, we can't search the city due to internal error: <b>${err.message}</b>`;
     }
@@ -190,6 +191,11 @@ function renderBackToTop() {
 renderMain();
 renderHeader();
 renderBackToTop();
+renderFooter();
+
+function renderFooter() {
+  document.body.append(renderFooterObj());
+}
 
 /* assegno evento per gestione enter sull'elemento input */
 /* DA RIVEDERE */

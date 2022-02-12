@@ -15,13 +15,13 @@ $font-family-base: "Raleway", sans-serif;
   }
 }
 
-.mtop150 {
-  margin-top: 150px;
-}
-
 body {
-  background: url("../background.jpg") no-repeat center center fixed;
+  // background: url("../background.jpg") no-repeat center center fixed;
+  background-image: url("../background.jpg");
+  background-position: right top;
+  background-repeat: no-repeat;
   background-size: cover;
+  background-attachment: fixed;
   min-height: 100%;
   display: flex;
   flex-direction: column;
@@ -45,6 +45,20 @@ html {
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
+  }
+
+  body {
+    background-image: url("../background-sm.jpg");
+  }
+}
+
+.m-top {
+  margin-top: 30px;
+}
+
+@include media-breakpoint-up(lg) {
+  .m-top {
+    margin-top: 150px;
   }
 }
 

@@ -4,7 +4,6 @@ import "@fortawesome/fontawesome-free/css/all.css";
 import "@fortawesome/fontawesome-free/js/all";
 import "@popperjs/core";
 import * as bootstrap from "bootstrap";
-// ("bootstrap/dist/js/bootstrap.bundle");
 
 import teleportApi from "./api/teleportApi";
 import renderSeachbarObj from "./components/searchbar/searchbar";
@@ -16,6 +15,8 @@ import renderIntroObj from "./components/intro/intro";
 import renderNavbarObj from "./components/navbar/navbar";
 import renderBckTopObj from "./components/backtotop/backToTopBtn";
 import renderFooterObj from "./components/footer/footer";
+import wrapCitiesList from "./utils/wrapCitiesList";
+import roundScores from "./utils/roundScores";
 
 const searchbarID = "searchbar";
 const citiesListID = "citiesList";
@@ -24,15 +25,15 @@ const errorMsgID = "error";
 const introID = "introText";
 let selectedCity;
 
+/* Start MAIN */
 function startPage(elem) {
   const intro = renderIntroObj(introID);
   /* oggetto searchbar */
   const searchbar = renderSeachbarObj(searchbarID);
-  /* creao div result per gestione cambio elemento */
+  /* creo div result per gestione cambio elemento */
   const divResult = document.createElement("div");
 
   /* trova l'elemento button e assegna listener passando il valore di input */
-  /* DA RIVEDERE */
   _.find(searchbar.children, (child) => {
     if (child.nodeName == "BUTTON") {
       child.addEventListener("click", () => {
@@ -47,22 +48,19 @@ function startPage(elem) {
     }
   });
 
-  elem.append(intro, searchbar, divResult);
-}
+  // const inputSearch = document.getElementById(searchbarID).children[0];
 
-function wrapCitiesList(citiesList) {
-  return _.map(citiesList, (value) => {
-    let geonameid = _.get(value, "_links.city:item.href");
-    // return only geonameid number from href teleport
-    geonameid = _.replace(geonameid, /.*:(\d*).*/, "$1");
-    let name = _.get(value, "matching_full_name");
-    /* removing duplicated name in string */
-    name = Array.from(new Set(_.split(name, ", "))).join(", ");
-    return {
-      geonameid: geonameid,
-      name: name,
-    };
-  });
+  // inputSearch.addEventListener("keyup", function (event) {
+  //   // Number 13 is the "Enter" key on the keyboard
+  //   if (event.keyCode === 13) {
+  //     // Cancel the default action, if needed
+  //     event.preventDefault();
+  //     // Trigger the button element with a click
+  //     document.getElementById(searchbarID).children[1].click();
+  //   }
+  // });
+
+  elem.append(intro, searchbar, divResult);
 }
 
 async function setCitiesBtn(cityToSearch, elem) {
@@ -99,21 +97,6 @@ async function setCitiesBtn(cityToSearch, elem) {
   }
 }
 
-function roundScores(scoresCollection) {
-  /* Round scores returned by teleportApi.getCityScores method */
-
-  scoresCollection.teleport_city_score = _.round(
-    scoresCollection.teleport_city_score,
-    2
-  );
-
-  _.forEach(scoresCollection.categories, function (value) {
-    value.score_out_of_10 = _.round(value.score_out_of_10, 2);
-  });
-
-  return scoresCollection;
-}
-
 async function setScores(cityid, selectedCity, elem) {
   try {
     const slugName = await teleportApi.getUrbanAreaSlug(cityid);
@@ -141,9 +124,14 @@ async function setScores(cityid, selectedCity, elem) {
 }
 
 function renderMain() {
+  // const main = document.createElement("main");
   const main = _.head(document.getElementsByTagName("main"));
+  console.log(main);
   startPage(main);
 }
+/* End MAIN */
+
+/* Start HEADER */
 
 function renderHeader() {
   /* SISTEMARE */
@@ -161,6 +149,15 @@ function renderHeader() {
     if (!event.target.closest('[data-bs-toggle="popover"]')) popover.hide();
   });
 }
+/* End HEADER */
+
+/* start FOOTER */
+function renderFooter() {
+  document.body.append(renderFooterObj());
+}
+/* End FOOTER */
+
+/* Start Back to top element */
 
 function renderBackToTop() {
   const bckTopID = "backToTop";
@@ -188,9 +185,7 @@ function renderBackToTop() {
   document.body.append(bckTopBtn);
 }
 
-function renderFooter() {
-  document.body.append(renderFooterObj());
-}
+/* End Back to top element */
 
 renderMain();
 renderHeader();

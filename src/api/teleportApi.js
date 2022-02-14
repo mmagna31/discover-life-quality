@@ -1,5 +1,5 @@
 import _ from "lodash";
-import NoInfoAvailableError from "../noInfoError";
+import NoInfoAvailableError from "../utils/noInfoError";
 
 const axios = require("axios");
 

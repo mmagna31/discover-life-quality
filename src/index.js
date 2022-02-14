@@ -1,4 +1,4 @@
-import "./scss/custom.scss";
+import "./assets/scss/custom.scss";
 var _ = require("lodash");
 import "@fortawesome/fontawesome-free/css/all.css";
 import "@fortawesome/fontawesome-free/js/all";
@@ -10,14 +10,14 @@ import renderSeachbarObj from "./components/searchbar/searchbar";
 import renderCityListObj from "./components/citiesList/citiesList";
 import renderScoresListObj from "./components/scoresList/scoresList";
 import renderErrObj from "./components/error/errorMessage";
-import NoInfoAvailableError from "./noInfoError";
 import renderIntroObj from "./components/intro/intro";
 import renderNavbarObj from "./components/navbar/navbar";
 import renderBckTopObj from "./components/backtotop/backToTopBtn";
 import renderFooterObj from "./components/footer/footer";
-import wrapCitiesList from "./utils/wrapCitiesList";
+import NoInfoAvailableError from "./utils/noInfoError";
 import roundScores from "./utils/roundScores";
 import searchbarEnterHandler from "./utils/enterKeyHandler";
+import wrapCitiesList from "./utils/wrapCitiesList";
 
 const searchbarID = "searchbar";
 const citiesListID = "citiesList";

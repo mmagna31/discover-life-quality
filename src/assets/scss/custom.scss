@@ -16,7 +16,7 @@ $font-family-base: "Raleway", sans-serif;
 }
 
 body {
-  background: url("../background.jpg") no-repeat center center fixed;
+  background: url("../images/background.jpg") no-repeat center center fixed;
   background-size: cover;
   min-height: 100%;
   display: flex;
@@ -44,7 +44,7 @@ html {
   }
 
   body {
-    background-image: url("../background-sm.jpg");
+    background-image: url("../images/background-sm.jpg");
   }
 }
 

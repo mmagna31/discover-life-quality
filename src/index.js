@@ -17,51 +17,18 @@ import renderBckTopObj from "./components/backtotop/backToTopBtn";
 import renderFooterObj from "./components/footer/footer";
 import wrapCitiesList from "./utils/wrapCitiesList";
 import roundScores from "./utils/roundScores";
+import searchbarEnterHandler from "./utils/enterKeyHandler";
 
 const searchbarID = "searchbar";
 const citiesListID = "citiesList";
 const cityScoresID = "scores";
 const errorMsgID = "error";
 const introID = "introText";
+const navbarID = "navbar";
+const btnInfoID = "info";
 let selectedCity;
 
 /* Start MAIN */
-function startPage(elem) {
-  const intro = renderIntroObj(introID);
-  /* oggetto searchbar */
-  const searchbar = renderSeachbarObj(searchbarID);
-  /* creo div result per gestione cambio elemento */
-  const divResult = document.createElement("div");
-
-  /* trova l'elemento button e assegna listener passando il valore di input */
-  _.find(searchbar.children, (child) => {
-    if (child.nodeName == "BUTTON") {
-      child.addEventListener("click", () => {
-        const input = _.find(searchbar.children, (child) => {
-          return child.nodeName == "INPUT";
-        });
-
-        intro.hidden = true;
-        divResult.innerHTML = "";
-        setCitiesBtn(input.value, divResult);
-      });
-    }
-  });
-
-  // const inputSearch = document.getElementById(searchbarID).children[0];
-
-  // inputSearch.addEventListener("keyup", function (event) {
-  //   // Number 13 is the "Enter" key on the keyboard
-  //   if (event.keyCode === 13) {
-  //     // Cancel the default action, if needed
-  //     event.preventDefault();
-  //     // Trigger the button element with a click
-  //     document.getElementById(searchbarID).children[1].click();
-  //   }
-  // });
-
-  elem.append(intro, searchbar, divResult);
-}
 
 async function setCitiesBtn(cityToSearch, elem) {
   try {
@@ -124,10 +91,27 @@ async function setScores(cityid, selectedCity, elem) {
 }
 
 function renderMain() {
-  // const main = document.createElement("main");
-  const main = _.head(document.getElementsByTagName("main"));
-  console.log(main);
-  startPage(main);
+  const main = document.createElement("main");
+
+  const intro = renderIntroObj(introID);
+  /* oggetto searchbar */
+  const searchbar = renderSeachbarObj(searchbarID);
+  const input = searchbar.children[0];
+  const searchBtn = searchbar.children[1];
+  /* Adding event to manage enter key on searchbar */
+  searchbarEnterHandler(input, searchBtn);
+  /* Div element to manage citiesList and scoreList elements */
+  const divResult = document.createElement("div");
+
+  searchBtn.addEventListener("click", () => {
+    intro.hidden = true;
+    divResult.innerHTML = "";
+    setCitiesBtn(input.value, divResult);
+  });
+
+  main.append(intro, searchbar, divResult);
+
+  return main;
 }
 /* End MAIN */
 
@@ -135,12 +119,19 @@ function renderMain() {
 
 function renderHeader() {
   /* SISTEMARE */
-  const header = _.head(document.getElementsByTagName("header"));
-  const navbar = renderNavbarObj();
+  // const header = _.head(document.getElementsByTagName("header"));
+  const header = document.createElement("header");
+  const navbar = renderNavbarObj(navbarID, btnInfoID);
 
   header.append(navbar);
+
+  /* DA RIVEDERE */
+  const infoBtn = _.find(navbar.children[0].children, (child) => {
+    return child.nodeName == "BUTTON";
+  });
+
   /* aggiungo popover */
-  let popover = new bootstrap.Popover(document.getElementById("info"), {
+  let popover = new bootstrap.Popover(infoBtn, {
     container: "body",
   });
 
@@ -148,12 +139,14 @@ function renderHeader() {
   document.body.addEventListener("click", (event) => {
     if (!event.target.closest('[data-bs-toggle="popover"]')) popover.hide();
   });
+
+  return header;
 }
 /* End HEADER */
 
 /* start FOOTER */
 function renderFooter() {
-  document.body.append(renderFooterObj());
+  return renderFooterObj();
 }
 /* End FOOTER */
 
@@ -182,26 +175,15 @@ function renderBackToTop() {
     }
   });
 
-  document.body.append(bckTopBtn);
+  return bckTopBtn;
 }
 
 /* End Back to top element */
 
-renderMain();
-renderHeader();
-renderFooter();
-renderBackToTop();
-
-/* assegno evento per gestione enter sull'elemento input */
-/* DA RIVEDERE */
-const inputSearch = document.getElementById(searchbarID).children[0];
-
-inputSearch.addEventListener("keyup", function (event) {
-  // Number 13 is the "Enter" key on the keyboard
-  if (event.keyCode === 13) {
-    // Cancel the default action, if needed
-    event.preventDefault();
-    // Trigger the button element with a click
-    document.getElementById(searchbarID).children[1].click();
-  }
-});
+/* Setting body */
+document.body.append(
+  renderHeader(),
+  renderMain(),
+  renderFooter(),
+  renderBackToTop()
+);

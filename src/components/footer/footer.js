@@ -7,7 +7,6 @@ function renderFooterObj(footerID = "ftr") {
     footerID: footerID,
   });
 
-  console.log(rendered);
   return parseHtmlById(rendered, footerID);
 }
 

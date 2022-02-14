@@ -1,8 +1,0 @@
-- fare readme github
-- rivedere gestione messaggio errore
-- sistemare colore popover
-- rivedere navbar template
-- rivedere immagine background
-- sistemare city score
-- rivedere codice 
-- fix background on android

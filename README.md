@@ -1,15 +1,41 @@
-# 🚀 Welcome to your new awesome project!
+## Discover life quality
 
-This project has been created using **webpack-cli**, you can now run
+TO DO... <a href="https://discoverlifequality.netlify.app/">View Demo</a>
 
-```
-npm run build
-```
+## About The Project
 
-or
+TO DO...
 
-```
-yarn build
-```
+## Getting Started
 
-to bundle your application
+To get a local copy up and running follow these simple steps.
+
+### Prerequisites
+
+- npm
+  ```sh
+  npm install npm@latest -g
+  ```
+
+### Installation
+
+1. Clone the repo
+   ```sh
+   git clone https://github.com/mmagna31/discover-life-quality.git
+   ```
+2. Install NPM packages
+   ```sh
+   npm install
+   ```
+
+## Usage
+
+TO DO...
+
+## License
+
+Distributed under the MIT License. See `LICENSE` for more information.
+
+## Known issues
+
+TO DO...

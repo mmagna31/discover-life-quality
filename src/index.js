@@ -19,6 +19,7 @@ import roundScores from "./utils/roundScores";
 import searchbarEnterHandler from "./utils/enterKeyHandler";
 import wrapCitiesList from "./utils/wrapCitiesList";
 
+/* Elements ID  */
 const searchbarID = "searchbar";
 const citiesListID = "citiesList";
 const cityScoresID = "scores";
@@ -26,6 +27,7 @@ const errorMsgID = "error";
 const introID = "introText";
 const navbarID = "navbar";
 const btnInfoID = "info";
+
 let selectedCity;
 
 /* Start MAIN */
@@ -39,26 +41,26 @@ async function setCitiesBtn(cityToSearch, elem) {
       wrapCitiesList(citiesList)
     );
 
-    /* aggiungo addEventlistner sfruttando l'event delegation */
-
     citiesBtnList.addEventListener("click", (event) => {
       if (event.target.tagName != "BUTTON") return false;
-      /* rimuovo contenuto divResult */
+
       elem.innerHTML = "";
 
       const cityId = event.target.id;
       selectedCity = _.toUpper(event.target.textContent);
       setScores(cityId, _.head(selectedCity.split(",")), elem);
     });
+
     elem.append(citiesBtnList);
   } catch (err) {
     let errorMsg;
+
     if (err instanceof NoInfoAvailableError) {
       errorMsg = err.message;
     } else {
       errorMsg = `Sorry, we can't search the city due to internal error: <b>${err.message}</b>`;
     }
-    /* rimuovo contenuto divResult */
+
     elem.innerHTML = "";
     elem.append(renderErrObj(errorMsgID, errorMsg));
   }
@@ -71,10 +73,9 @@ async function setScores(cityid, selectedCity, elem) {
 
     cityScores = roundScores(cityScores);
 
-    // adding cityname
+    /* adding key to set name city on scores list view */
     cityScores["cityName"] = selectedCity;
 
-    /* rimuovo contenuto divResult */
     elem.innerHTML = "";
     elem.append(renderScoresListObj(cityScoresID, cityScores));
   } catch (err) {
@@ -84,7 +85,6 @@ async function setScores(cityid, selectedCity, elem) {
     } else {
       errorMsg = `Sorry, we can't search the city due to internal error: <b>${err.message}</b>`;
     }
-    /* rimuovo contenuto divResult */
     elem.innerHTML = "";
     elem.append(renderErrObj(errorMsgID, errorMsg));
   }
@@ -94,7 +94,6 @@ function renderMain() {
   const main = document.createElement("main");
 
   const intro = renderIntroObj(introID);
-  /* oggetto searchbar */
   const searchbar = renderSeachbarObj(searchbarID);
   const input = searchbar.children[0];
   const searchBtn = searchbar.children[1];
@@ -118,24 +117,21 @@ function renderMain() {
 /* Start HEADER */
 
 function renderHeader() {
-  /* SISTEMARE */
-  // const header = _.head(document.getElementsByTagName("header"));
   const header = document.createElement("header");
   const navbar = renderNavbarObj(navbarID, btnInfoID);
 
   header.append(navbar);
 
-  /* DA RIVEDERE */
   const infoBtn = _.find(navbar.children[0].children, (child) => {
     return child.nodeName == "BUTTON";
   });
 
-  /* aggiungo popover */
+  /* adding popover */
   let popover = new bootstrap.Popover(infoBtn, {
     container: "body",
   });
 
-  /* aggiunge evento per nascondere il popover */
+  /* Event to hide popover when other element is clicked */
   document.body.addEventListener("click", (event) => {
     if (!event.target.closest('[data-bs-toggle="popover"]')) popover.hide();
   });
@@ -163,6 +159,7 @@ function renderBackToTop() {
     document.documentElement.scrollTop = 0;
   });
 
+  /* It shows the button only when scrolling the page */
   window.addEventListener("scroll", () => {
     const bckTop = document.getElementById("backToTopBtn");
     if (
@@ -180,7 +177,7 @@ function renderBackToTop() {
 
 /* End Back to top element */
 
-/* Setting body */
+/* Set the body */
 document.body.append(
   renderHeader(),
   renderMain(),

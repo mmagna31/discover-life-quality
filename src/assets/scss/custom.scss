@@ -19,17 +19,14 @@ body {
   background: url("../images/background.jpg") no-repeat center center fixed;
   background-size: cover;
   // min-height: 100%;
-
-  height: 100vh; /* Fallback for browsers that do not support Custom Properties */
-  height: calc(var(--vh, 1vh) * 100);
-
+  height: 100vh;
   display: flex;
   flex-direction: column;
 }
 
 html {
   scroll-behavior: smooth;
-  // height: 100%;
+  height: 100%;
 }
 
 .rounded-ends {

@@ -2,7 +2,8 @@
 
 ## About The Project
 
-_Discover life quality_ is a web interface built on the data gained by the public Apis of <a href="https://developers.teleport.org/api/">TELEPORT FOR DEVELOPERS</a>.
+_Discover life quality_ is a web interface built on the data provided by the public Apis of TELEPORT FOR DEVELOPERS.
+
 It is useful for discovering the quality of life in cities.
 
 <a href="https://discoverlifequality.netlify.app/">**_View Demo_**</a>
@@ -54,7 +55,7 @@ To get a local copy up and running follow these simple steps.
 
 Distributed under the MIT License. See `LICENSE` for more information.
 
-## Acknowledgments for the services provided
+## Acknowledgments
 
 - [Teleport Public Apis](https://developers.teleport.org/api/getting_started/)
 - [Font Awesome](https://fontawesome.com)
